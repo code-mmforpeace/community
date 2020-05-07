@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongyuanbbs.demo.Mapper.UserMapper">
+    <select id="findAll" parameterType="com.zhongyuanbbs.demo.domain.User">
+        SELECT * FROM zk_user
+    </select>
+
+    <insert id="addUser" parameterType="com.zhongyuanbbs.demo.domain.User">
+        INSERT INTO zk_user (id,zk_username,zk_password,create_time,last_edit_time)
+        VALUES (#{id},#{zkUsername},#{zkPassword},#{createTime},#{lastEditTime})
+    </insert>
+</mapper>
