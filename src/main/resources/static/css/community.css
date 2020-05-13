@@ -1,0 +1,24 @@
+body{
+    background-color: #efefef;
+}
+.que{
+    background-color: white;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.image{
+    width:40px;
+    border-radius: 50%;
+}
+.main{
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}

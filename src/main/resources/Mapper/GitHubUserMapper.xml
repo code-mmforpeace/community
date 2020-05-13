@@ -5,11 +5,27 @@
 
 <mapper namespace="com.zhongyuanbbs.demo.Mapper.GithubUserMapper">
     <insert id="addGithubUser" parameterType="com.zhongyuanbbs.demo.domain.GitHubUser">
-        INSERT INTO zk_github_user(id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time)
-        VALUES (#{id},#{zkGithubUsername},#{zkGithubAccountId},#{zkGithubToken},#{zkGithubBio},#{createTime},#{lastEditTime})
+        INSERT INTO zk_github_user(id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time,image_url)
+        VALUES (#{id},#{zkGithubUsername},#{zkGithubAccountId},#{zkGithubToken},#{zkGithubBio},#{createTime},#{lastEditTime},#{imageUrl})
     </insert>
     <select id="getGitHubUserByToken" parameterType="String" resultType="com.zhongyuanbbs.demo.domain.GitHubUser">
-        SELECT id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time FROM zk_github_user
+        SELECT id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time,image_url FROM zk_github_user
         WHERE zk_github_token = #{token}
     </select>
+    <select id="getGithunUserById" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.GitHubUser">
+        SELECT id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time,image_url FROM zk_github_user
+        WHERE id = #{id}
+    </select>
+    <delete id="updateGithunUser" parameterType="com.zhongyuanbbs.demo.domain.GitHubUser">
+        UPDATE zk_github_user
+        <set>
+            <if test="zkGithubUsername != null">zk_github_username =#{zkGithubUsername},</if>
+            <!--<if test="zkGithubAccountId != null">zk_github_password =#{zkGithubAccountId},</if>-->
+            <if test="zkGithubToken != null">zk_github_token =#{zkGithubToken},</if>
+            <if test="zkGithubBio != null">zk_github_bio =#{zkGithubToken},</if>
+            <if test="lastEditTime != null">last_edit_time =#{lastEditTime},</if>
+            <if test="imageUrl != null">image_url =#{imageUrl}</if>
+        </set>
+        WHERE zk_github_account_id =#{zkGithubAccountId}
+    </delete>
 </mapper>

@@ -14,5 +14,6 @@ public class GitHubUser {
     private String zkGithubBio;
     private Date createTime;
     private Date lastEditTime;
+    private String imageUrl;
 
 }

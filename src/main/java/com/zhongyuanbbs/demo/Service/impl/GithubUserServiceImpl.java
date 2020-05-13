@@ -21,4 +21,14 @@ public class GithubUserServiceImpl implements GithubUserService {
     public GitHubUser getGitHubUserByToken(String token) {
         return githubUserMapper.getGitHubUserByToken(token);
     }
+
+    @Override
+    public GitHubUser getGithunUserById(Integer id) {
+        return githubUserMapper.getGithunUserById(id);
+    }
+
+    @Override
+    public Integer updateGithunUser(GitHubUser gitHubUser) {
+        return githubUserMapper.updateGithunUser(gitHubUser);
+    }
 }

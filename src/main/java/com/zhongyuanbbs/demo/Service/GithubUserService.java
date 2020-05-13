@@ -8,4 +8,8 @@ public interface GithubUserService {
 
     GitHubUser getGitHubUserByToken(String token);
 
+    GitHubUser getGithunUserById(Integer id);
+
+    Integer updateGithunUser(GitHubUser gitHubUser);
+
 }

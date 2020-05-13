@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>仲园bbs：仲园学子聊天吹水的小地方</title>
+    <title>发布 - 仲园bbs</title>
     <meta http-equiv="Content-Type" content="text/html; charset = UTF-8"/>
 
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/community.css">
     <script src="common/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </head>
@@ -23,7 +24,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">仲园bbs</a>
+            <a class="navbar-brand" href="/">仲园bbs</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -40,6 +41,9 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" th:if="${session.user != null}">
+                    <a href="/publish">发帖</a>
+                </li>
+                <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.zkGithubUsername}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">个人中心</a></li>
@@ -54,6 +58,40 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<div class="container-fluid main que">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 发起</h2>
+            <hr>
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="title">主题名 (简单扼要)：</label>
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="主题名...">
+                </div>
+                <div class="form-group">
+                    <label for="question-desc">简单描述（必填，请参照右侧提示）：</label>
+                    <input type="text" class="form-control" th:value="${questionDesc}" id="question-desc" name="question-desc" placeholder="简单描述...">
+                </div>
+                <div class="form-group">
+                    <label for="tag">添加标签：</label>
+                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="多标签以，分隔..">
+                </div>
+                <div class="container-fluid main que">
+                    <div class="row">
+                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" style="width: 100%" th:if="${message!=null}" th:text="${message}"></div>
+                        <button type="submit" class="btn btn-success btn-publish"> 确认发帖</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-md-12 col-xs-12">
+            <h3>发帖注意事项</h3>
+            -帖子主题简明扼要<br/>
+            -补充说明简单描述<br/>
+            -输入标签时如果有多个标签请使用逗号分隔开
+        </div>
+    </div>
+</div><!-- .container-fluid -->
 
 </body>
 

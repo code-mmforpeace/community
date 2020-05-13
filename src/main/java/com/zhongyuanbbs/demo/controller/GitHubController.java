@@ -1,6 +1,7 @@
 package com.zhongyuanbbs.demo.controller;
 
 import com.zhongyuanbbs.demo.Mapper.GithubUserMapper;
+import com.zhongyuanbbs.demo.Service.GithubUserService;
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import com.zhongyuanbbs.demo.dto.GitHubUserDto;
 import com.zhongyuanbbs.demo.provider.GitHubProvider;
@@ -23,7 +24,7 @@ public class GitHubController {
     @Autowired
     private GitHubProvider gitHubProvider;
     @Autowired
-    private GithubUserMapper githubUserMapper;
+    private GithubUserService githubUserService;
 
     @Value("${github.client.id}")
     private String client_id;
@@ -52,21 +53,21 @@ public class GitHubController {
         //System.out.println(gitHubUserDto.getId());
         //空值判断
         if(gitHubUserDto != null && gitHubUserDto.getId() > -1){
-            //登陆成功
+            GitHubUser githunUserById = githubUserService.getGithunUserById(gitHubUserDto.getId());
             GitHubUser gitHubUser = new GitHubUser();
-            gitHubUser.setZkGithubAccountId(gitHubUserDto.getId());
+            gitHubUser.setZkGithubAccountId(Long.valueOf(gitHubUserDto.getId()));
             gitHubUser.setZkGithubToken(String.valueOf(UUID.randomUUID()));
             gitHubUser.setZkGithubBio(gitHubUserDto.getBio());
             gitHubUser.setZkGithubUsername(gitHubUserDto.getName());
-            gitHubUser.setCreateTime(new Date());
             gitHubUser.setLastEditTime(new Date());
-            Integer i = githubUserMapper.addGithubUser(gitHubUser);
-            if(i > -1){
-                //TODO
-                response.addCookie(new Cookie("token",gitHubUser.getZkGithubToken()));
+            gitHubUser.setImageUrl(gitHubUserDto.getAvatarUrl());
+            if(githunUserById.getZkGithubAccountId()!=null && githunUserById != null){
+                githubUserService.updateGithunUser(gitHubUser);
             }else {
-
+                gitHubUser.setCreateTime(new Date());
+                githubUserService.addGithubUser(gitHubUser);
             }
+            response.addCookie(new Cookie("token", gitHubUser.getZkGithubToken()));
             return "redirect:/";
         }else {
             //登录失败

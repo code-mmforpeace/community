@@ -10,4 +10,8 @@ public interface GithubUserMapper {
 
     GitHubUser getGitHubUserByToken(String token);
 
+    GitHubUser getGithunUserById(Integer id);
+
+    Integer updateGithunUser(GitHubUser gitHubUser);
+
 }

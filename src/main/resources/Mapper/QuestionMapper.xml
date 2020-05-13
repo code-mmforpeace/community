@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongyuanbbs.demo.Mapper.QuestionMapper">
+    <select id="queryQuestionCount" resultType="int">
+        SELECT count(1) FROM zk_question
+    </select>
+    <insert id="newQuestion" parameterType="com.zhongyuanbbs.demo.domain.Question">
+        INSERT INTO zk_question(id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag)
+        VALUES (#{id},#{title},#{description},#{qsCreateTime},#{qsLastEditTime},#{creator},#{commentCount},#{viewCount},#{likeCount},#{tag})
+    </insert>
+    <select id="getQuestionLists" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Question">
+        SELECT
+        id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag
+        FROM zk_question
+        LIMIT #{rowIndex},#{pageSize}
+    </select>
+</mapper>
