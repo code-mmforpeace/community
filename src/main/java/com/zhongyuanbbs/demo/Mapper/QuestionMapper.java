@@ -11,8 +11,14 @@ public interface QuestionMapper {
 
     Integer queryQuestionCount();
 
+    Integer queryQuestionCountById(@Param("userId") Integer userId);
+
     List<Question> getQuestionLists(@Param("rowIndex") Integer rowIndex, @Param("pageSize") Integer pageSize);
 
     Integer newQuestion(Question question);
+
+    List<Question> getQuestionListsById(@Param("userId")Integer userId,@Param("rowIndex") Integer rowIndex, @Param("pageSize") Integer pageSize);
+
+    Question getQuestionById(@Param("questionId")Integer questionId);
 
 }

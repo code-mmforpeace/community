@@ -14,4 +14,5 @@ public interface GithubUserMapper {
 
     Integer updateGithunUser(GitHubUser gitHubUser);
 
+    GitHubUser getGithunUserByTId(Integer id);
 }

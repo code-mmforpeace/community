@@ -31,4 +31,9 @@ public class GithubUserServiceImpl implements GithubUserService {
     public Integer updateGithunUser(GitHubUser gitHubUser) {
         return githubUserMapper.updateGithunUser(gitHubUser);
     }
+
+    @Override
+    public GitHubUser getGithunUserByTId(Integer creator) {
+        return githubUserMapper.getGithunUserByTId(creator);
+    }
 }

@@ -6,6 +6,9 @@
     <select id="queryQuestionCount" resultType="int">
         SELECT count(1) FROM zk_question
     </select>
+    <select id="queryQuestionCountById" parameterType="int" resultType="int">
+        SELECT count(1) FROM zk_question WHERE creator = #{userId}
+    </select>
     <insert id="newQuestion" parameterType="com.zhongyuanbbs.demo.domain.Question">
         INSERT INTO zk_question(id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag)
         VALUES (#{id},#{title},#{description},#{qsCreateTime},#{qsLastEditTime},#{creator},#{commentCount},#{viewCount},#{likeCount},#{tag})
@@ -15,5 +18,18 @@
         id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag
         FROM zk_question
         LIMIT #{rowIndex},#{pageSize}
+    </select>
+    <select id="getQuestionListsById" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Question">
+        SELECT
+        id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag
+        FROM zk_question
+        WHERE creator=#{userId}
+        LIMIT #{rowIndex},#{pageSize}
+    </select>
+    <select id="getQuestionById" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Question">
+        SELECT
+        id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag
+        FROM zk_question
+        WHERE id = #{questionId}
     </select>
 </mapper>

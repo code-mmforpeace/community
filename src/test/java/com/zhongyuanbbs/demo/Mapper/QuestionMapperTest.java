@@ -14,7 +14,6 @@ public class QuestionMapperTest extends DemoApplicationTests {
     private QuestionMapper questionMapper;
 
     @Test
-    @Ignore
     public void testCount(){
         Integer integer = questionMapper.queryQuestionCount();
         System.out.println(integer);
@@ -25,5 +24,17 @@ public class QuestionMapperTest extends DemoApplicationTests {
         List<Question> questionLists = questionMapper.getQuestionLists(1,5);
         //System.out.println(Math.ceil(12/5));
         System.out.println(questionLists.size());
+    }
+
+    @Test
+    public void testQueryQuestionListsById(){
+        List<Question> questionListsById = questionMapper.getQuestionListsById(1, 1, 5);
+        System.out.println(questionListsById.size());
+    }
+
+    @Test
+    public void testQueryQuestionById(){
+        Question questionById = questionMapper.getQuestionById(1);
+        System.out.println(questionById.getTitle());
     }
 }

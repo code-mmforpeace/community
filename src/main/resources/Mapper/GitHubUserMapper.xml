@@ -14,6 +14,10 @@
     </select>
     <select id="getGithunUserById" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.GitHubUser">
         SELECT id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time,image_url FROM zk_github_user
+        WHERE zk_github_account_id = #{id}
+    </select>
+    <select id="getGithunUserByTId" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.GitHubUser">
+        SELECT id,zk_github_username,zk_github_account_id,zk_github_token,zk_github_bio,create_time,last_edit_time,image_url FROM zk_github_user
         WHERE id = #{id}
     </select>
     <delete id="updateGithunUser" parameterType="com.zhongyuanbbs.demo.domain.GitHubUser">

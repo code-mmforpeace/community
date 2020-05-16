@@ -61,7 +61,7 @@ public class GitHubController {
             gitHubUser.setZkGithubUsername(gitHubUserDto.getName());
             gitHubUser.setLastEditTime(new Date());
             gitHubUser.setImageUrl(gitHubUserDto.getAvatarUrl());
-            if(githunUserById.getZkGithubAccountId()!=null && githunUserById != null){
+            if(githunUserById.getZkGithubAccountId()!=null){
                 githubUserService.updateGithunUser(gitHubUser);
             }else {
                 gitHubUser.setCreateTime(new Date());

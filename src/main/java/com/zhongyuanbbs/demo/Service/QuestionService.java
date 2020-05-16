@@ -1,11 +1,14 @@
 package com.zhongyuanbbs.demo.Service;
 
 import com.zhongyuanbbs.demo.domain.Question;
-
-import java.util.List;
+import com.zhongyuanbbs.demo.dto.PageDto;
 
 public interface QuestionService {
 
-    List<Question> getQuestionLists(Integer pageIndex,Integer pageSize);
+    PageDto getQuestionLists(Integer pageIndex, Integer pageSize);
+
+    PageDto getQuestionListsById(Integer userId,Integer pageIndex,Integer pageSize);
+
+    Question getQuestionById(Integer questionId);
 
 }

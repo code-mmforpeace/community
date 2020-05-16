@@ -12,4 +12,5 @@ public interface GithubUserService {
 
     Integer updateGithunUser(GitHubUser gitHubUser);
 
+    GitHubUser getGithunUserByTId(Integer creator);
 }
