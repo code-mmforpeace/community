@@ -72,7 +72,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getQuestionById(Integer questionId) {
         Question questionById = questionMapper.getQuestionById(questionId);
-        GitHubUser githunUserById = githubUserService.getGithunUserById(questionById.getCreator());
+        GitHubUser githunUserById = githubUserService.getGithunUserByTId(questionById.getCreator());
         questionById.setGitHubUser(githunUserById);
         return questionById;
     }

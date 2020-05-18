@@ -25,3 +25,8 @@ body{
 .profile .section{
     margin-top:20px;
 }
+.question-menu{
+    color:#999;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
