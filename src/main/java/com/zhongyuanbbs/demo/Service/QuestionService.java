@@ -11,4 +11,7 @@ public interface QuestionService {
 
     Question getQuestionById(Integer questionId);
 
+    Integer createOrUpdateQuestion(Question question);
+
+    void insView(Integer questionId);
 }

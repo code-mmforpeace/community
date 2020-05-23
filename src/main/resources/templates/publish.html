@@ -5,11 +5,11 @@
     <title>发布 - 仲园bbs</title>
     <meta http-equiv="Content-Type" content="text/html; charset = UTF-8"/>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
-    <script src="common/jquery-1.11.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/common/jquery-1.11.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -21,6 +21,7 @@
             <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 发起</h2>
             <hr>
             <form action="/publish" method="post">
+                <input type="hidden" name="questionId" th:value="${questionId}"/>
                 <div class="form-group">
                     <label for="title">主题名 (简单扼要)：</label>
                     <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="主题名...">

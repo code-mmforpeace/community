@@ -6,11 +6,13 @@ import com.zhongyuanbbs.demo.Service.QuestionService;
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import com.zhongyuanbbs.demo.domain.Question;
 import com.zhongyuanbbs.demo.dto.PageDto;
+import com.zhongyuanbbs.demo.exception.CustiomizeException;
 import com.zhongyuanbbs.demo.utils.PageCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -72,8 +74,36 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getQuestionById(Integer questionId) {
         Question questionById = questionMapper.getQuestionById(questionId);
+        if(questionById == null){
+            throw new CustiomizeException("你找的问题消失了，要不换个试试？");
+        }
         GitHubUser githunUserById = githubUserService.getGithunUserByTId(questionById.getCreator());
         questionById.setGitHubUser(githunUserById);
         return questionById;
+    }
+
+    @Override
+    public Integer createOrUpdateQuestion(Question question) {
+        if(question != null && question.getId() != null){
+            question.setQsLastEditTime(new Date());
+            Integer integer = questionMapper.updateQuestion(question);
+            if(integer == 1) {
+                return integer;
+            }else {
+                throw new CustiomizeException("你找的问题消失了，要不换个试试？");
+            }
+        }else {
+            question.setQsCreateTime(new Date());
+            question.setQsLastEditTime(new Date());
+            return questionMapper.newQuestion(question);
+        }
+    }
+
+    @Override
+    public void insView(Integer questionId) {
+        Question question = new Question();
+        question.setId(questionId);
+        question.setViewCount(1);
+        questionMapper.insView(question);
     }
 }

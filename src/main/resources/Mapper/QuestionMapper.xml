@@ -10,8 +10,8 @@
         SELECT count(1) FROM zk_question WHERE creator = #{userId}
     </select>
     <insert id="newQuestion" parameterType="com.zhongyuanbbs.demo.domain.Question">
-        INSERT INTO zk_question(id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag)
-        VALUES (#{id},#{title},#{description},#{qsCreateTime},#{qsLastEditTime},#{creator},#{commentCount},#{viewCount},#{likeCount},#{tag})
+        INSERT INTO zk_question(id,title,description,qs_create_time,qu_last_edit_time,creator,tag)
+        VALUES (#{id},#{title},#{description},#{qsCreateTime},#{qsLastEditTime},#{creator},#{tag})
     </insert>
     <select id="getQuestionLists" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Question">
         SELECT
@@ -32,4 +32,28 @@
         FROM zk_question
         WHERE id = #{questionId}
     </select>
+    <update id="updateQuestion" parameterType="com.zhongyuanbbs.demo.domain.Question">
+        UPDATE zk_question
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="tag != null">tag =#{tag}</if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+    <update id="insView" parameterType="com.zhongyuanbbs.demo.domain.Question">
+        UPDATE zk_question
+        SET
+        view_count = view_count + #{viewCount}
+        WHERE
+        id = #{id}
+    </update>
+    <update id="insCommentCount" parameterType="com.zhongyuanbbs.demo.domain.Question">
+        UPDATE zk_question
+        SET
+        comment_count = comment_count + #{commentCount}
+        WHERE
+        id = #{id}
+    </update>
 </mapper>

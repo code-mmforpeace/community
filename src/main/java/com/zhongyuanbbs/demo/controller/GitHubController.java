@@ -61,6 +61,7 @@ public class GitHubController {
             gitHubUser.setZkGithubUsername(gitHubUserDto.getName());
             gitHubUser.setLastEditTime(new Date());
             gitHubUser.setImageUrl(gitHubUserDto.getAvatarUrl());
+            request.getSession().setAttribute("user",gitHubUser);
             if(githunUserById.getZkGithubAccountId()!=null){
                 githubUserService.updateGithunUser(gitHubUser);
             }else {
@@ -73,6 +74,15 @@ public class GitHubController {
             //登录失败
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 
 }

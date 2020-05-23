@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongyuanbbs.demo.Mapper.CommentMapper">
+    <insert id="insertComment" parameterType="com.zhongyuanbbs.demo.domain.Comment">
+        INSERT INTO zk_comment(id,zk_comment,type,question_id,createor,comment_create_time,comment_modified,like_count)
+        VALUES (#{id},#{zkComment},#{type},#{questionId},#{createor},#{commentCreateTime},#{commentModified},#{likeCount})
+    </insert>
+    <select id="queryCommentById"  parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Comment">
+        SELECT * FROM zk_comment
+        WHERE id = #{id}
+    </select>
+    <select id="queryCommentByQuestionId" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Comment">
+        SELECT * FROM zk_comment
+        WHERE question_id = #{questionId} and type = #{type}
+        ORDER BY comment_create_time DESC
+    </select>
+    <select id="queryCommentCountByQuestionId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM zk_comment
+        WHERE question_id = #{questionId}
+    </select>
+</mapper>

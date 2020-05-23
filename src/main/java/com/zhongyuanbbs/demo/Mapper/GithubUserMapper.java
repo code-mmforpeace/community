@@ -2,6 +2,9 @@ package com.zhongyuanbbs.demo.Mapper;
 
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface GithubUserMapper {
@@ -15,4 +18,6 @@ public interface GithubUserMapper {
     Integer updateGithunUser(GitHubUser gitHubUser);
 
     GitHubUser getGithunUserByTId(Integer id);
+
+    List<GitHubUser> queryUserByUserIds(@Param("userIds") List<Integer> userIds);
 }

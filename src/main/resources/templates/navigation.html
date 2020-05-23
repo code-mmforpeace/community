@@ -42,7 +42,7 @@
                         <li><a href="#">收信处</a></li>
                         <li><a href="#">话题盒子</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">退出论坛</a></li>
+                        <li><a href="/logout">退出论坛</a></li>
                     </ul>
                 </li>
                 <li th:unless="${session.user != null}"><a href="https://github.com/login/oauth/authorize?client_id=b2590594b9734f988b36&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>

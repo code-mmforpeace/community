@@ -21,4 +21,9 @@ public interface QuestionMapper {
 
     Question getQuestionById(@Param("questionId")Integer questionId);
 
+    Integer updateQuestion(Question question);
+
+    void insView(Question question);
+
+    void insCommentCount(Question question);
 }

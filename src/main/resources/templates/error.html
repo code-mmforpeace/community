@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>仲园bbs：仲园学子聊天吹水的小地方</title>
+    <meta http-equiv="Content-Type" content="text/html; charset = UTF-8"/>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/common/jquery-1.11.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div th:insert="~{navigation :: nav}"></div>
+<div class="jumbotron col-lg-12 col-md-12 col-xs-12 col-sm-12 error">
+    <h1>访问出错了！！</h1>
+    <p th:text="${message}">找不到路了，请重新访问。。</p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a></p>
+</div>
+</body>
+
+</html>

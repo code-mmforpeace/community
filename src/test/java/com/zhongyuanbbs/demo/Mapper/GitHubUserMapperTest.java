@@ -6,7 +6,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class GitHubUserMapperTest extends DemoApplicationTests {
 
@@ -31,4 +34,12 @@ public class GitHubUserMapperTest extends DemoApplicationTests {
         githubUserMapper.updateGithunUser(gitHubUser);
     }
 
+    @Test
+    public void testQueryGithubUsers(){
+        List userIds = Arrays.asList(1,2);
+        List<GitHubUser> list = githubUserMapper.queryUserByUserIds(userIds);
+        for (GitHubUser user : list) {
+            System.out.println(user.getZkGithubUsername());
+        }
+    }
 }

@@ -37,4 +37,13 @@ public class QuestionMapperTest extends DemoApplicationTests {
         Question questionById = questionMapper.getQuestionById(1);
         System.out.println(questionById.getTitle());
     }
+
+    @Test
+    public void testUpdateQuestion(){
+        Question question = new Question();
+        question.setId(4);
+        question.setTitle("test更新");
+        Integer integer = questionMapper.updateQuestion(question);
+        System.out.println(integer);
+    }
 }
