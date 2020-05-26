@@ -6,14 +6,18 @@ import com.zhongyuanbbs.demo.Service.QuestionService;
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import com.zhongyuanbbs.demo.domain.Question;
 import com.zhongyuanbbs.demo.dto.PageDto;
+import com.zhongyuanbbs.demo.dto.QuestionDto;
 import com.zhongyuanbbs.demo.exception.CustiomizeException;
 import com.zhongyuanbbs.demo.utils.PageCalculator;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -72,14 +76,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question getQuestionById(Integer questionId) {
+    public QuestionDto getQuestionById(Integer questionId) {
+        QuestionDto result = new QuestionDto();
         Question questionById = questionMapper.getQuestionById(questionId);
         if(questionById == null){
             throw new CustiomizeException("你找的问题消失了，要不换个试试？");
         }
+        BeanUtils.copyProperties(questionById,result);
         GitHubUser githunUserById = githubUserService.getGithunUserByTId(questionById.getCreator());
-        questionById.setGitHubUser(githunUserById);
-        return questionById;
+        result.setGitHubUser(githunUserById);
+        return result;
     }
 
     @Override
@@ -105,5 +111,23 @@ public class QuestionServiceImpl implements QuestionService {
         question.setId(questionId);
         question.setViewCount(1);
         questionMapper.insView(question);
+    }
+
+    @Override
+    public List<QuestionDto> selectRelated(QuestionDto questionById) {
+        if(StringUtils.isBlank(questionById.getTag())){
+            return new ArrayList<>();
+        }
+        Question question = new Question();
+        String replace = StringUtils.replace(questionById.getTag(), "，", "|");
+        question.setTag(replace);
+        question.setId(questionById.getId());
+        List<Question> questions = questionMapper.selectRelated(question);
+        List<QuestionDto> questionDtos = questions.stream().map(q -> {
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(q,questionDto);
+            return questionDto;
+        }).collect(Collectors.toList());
+        return questionDtos;
     }
 }

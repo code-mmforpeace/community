@@ -62,12 +62,18 @@ public class CommentController {
         return modelMap;
     }
 
-    @RequestMapping(value = "/secondComment/{id}",method = RequestMethod.POST)
+    @RequestMapping("/secondComment/{id}")
     @ResponseBody
     public Map<String,Object> secondComment(@PathVariable(name="id")Integer id){
         Map<String,Object> modelMap = new HashMap<>();
         List<CommentDto> commentDtos = commentService.listByQuestionId(id, CommentEnum.SECOND_COMMENT.getCode());
-        modelMap.put("secondComments",commentDtos);
+        if(commentDtos != null && commentDtos.size() > 0 ){
+            modelMap.put("success",true);
+            modelMap.put("secondComments",commentDtos);
+        }else {
+            modelMap.put("success",false);
+            modelMap.put("errMsg",CommentEnum.EMPTY_COMMENT.getMessage());
+        }
         return modelMap;
     }
 

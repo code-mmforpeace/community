@@ -3,6 +3,7 @@ package com.zhongyuanbbs.demo.controller;
 import com.zhongyuanbbs.demo.Service.QuestionService;
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import com.zhongyuanbbs.demo.domain.Question;
+import com.zhongyuanbbs.demo.dto.QuestionDto;
 import com.zhongyuanbbs.demo.utils.HttpRequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class PublishController {
 
     @GetMapping("/publish/{questionId}")
     public String publish(@PathVariable("questionId")Integer questionId,Model model){
-        Question questionById = questionService.getQuestionById(questionId);
+        QuestionDto questionById = questionService.getQuestionById(questionId);
         model.addAttribute("questionId",questionId);
         model.addAttribute("title",questionById.getTitle());
         model.addAttribute("questionDesc",questionById.getDescription());
@@ -53,7 +54,7 @@ public class PublishController {
                 model.addAttribute("tag",tag);
                 question.setCreator(user.getId());
                 if(questionId > 0) {
-                    Question questionById = questionService.getQuestionById(questionId);
+                    QuestionDto questionById = questionService.getQuestionById(questionId);
                     Integer creator = questionById.getCreator();
                     if (creator.equals(user.getId())) {
                         question.setId(questionId);

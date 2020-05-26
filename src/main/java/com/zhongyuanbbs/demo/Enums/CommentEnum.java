@@ -7,6 +7,7 @@ public enum CommentEnum {
     TARGET_NOT_FOUND(2003,"未选中任何问题或评论进行回复"),
     TYPE_WRONG(2004,"评论的类型错误或不存在"),
     COMMENT_NOT_FOUND(2005,"回复的评论不存在"),
+    EMPTY_COMMENT(2006,"暂无评论"),
     QUESTION_COMMENT(1,"一级评论"),SECOND_COMMENT(2,"二级评论");
 
 

@@ -14,4 +14,5 @@ public class Comment {
     private Date commentCreateTime;
     private Date commentModified;
     private Integer likeCount;
+    private Integer commentCount;
 }

@@ -43,6 +43,20 @@ body{
 .question-name{
     padding-top:10px;
 }
+.question-tag{
+    margin-right:5px;
+}
+
+.question-tag .tagtext{
+    font-size: 10px;
+}
+.question-related{
+    line-height: 20px;
+    font-size: 12px;
+    list-style: none;
+    padding-left: 5px;
+}
+
 .comment-section{
     padding-bottom: 6px;
     margin-bottom: 15px;

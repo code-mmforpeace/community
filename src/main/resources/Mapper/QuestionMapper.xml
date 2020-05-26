@@ -17,6 +17,7 @@
         SELECT
         id,title,description,qs_create_time,qu_last_edit_time,creator,comment_count,view_count,like_count,tag
         FROM zk_question
+        ORDER BY qs_create_time DESC
         LIMIT #{rowIndex},#{pageSize}
     </select>
     <select id="getQuestionListsById" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.Question">
@@ -56,4 +57,8 @@
         WHERE
         id = #{id}
     </update>
+    <select id="selectRelated" parameterType="com.zhongyuanbbs.demo.domain.Question" resultType="com.zhongyuanbbs.demo.domain.Question">
+        SELECT * FROM zk_question
+        WHERE id != #{id} AND tag REGEXP #{tag}
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.zhongyuanbbs.demo.Service.CommentService;
 import com.zhongyuanbbs.demo.Service.QuestionService;
 import com.zhongyuanbbs.demo.domain.Question;
 import com.zhongyuanbbs.demo.dto.CommentDto;
+import com.zhongyuanbbs.demo.dto.QuestionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +25,15 @@ public class QuestionController {
 
     @GetMapping("/question/{questionId}")
     public String question(@PathVariable(name = "questionId")Integer questionId, Model model){
-        Question questionById = questionService.getQuestionById(questionId);
+        QuestionDto questionById = questionService.getQuestionById(questionId);
+        List<QuestionDto> relatedQuestions = questionService.selectRelated(questionById);
         List<CommentDto> commentDTOList = commentService.listByQuestionId(questionId, CommentEnum.QUESTION_COMMENT.getCode());
         Integer count = commentService.queryCommentCountByQuestionId(questionId);
         //阅读数的增加
         questionService.insView(questionId);
         model.addAttribute("question",questionById);
         model.addAttribute("commentList",commentDTOList);
+        model.addAttribute("related",relatedQuestions);
         model.addAttribute("count",count);
         return "question";
     }

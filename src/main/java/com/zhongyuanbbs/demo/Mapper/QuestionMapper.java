@@ -26,4 +26,6 @@ public interface QuestionMapper {
     void insView(Question question);
 
     void insCommentCount(Question question);
+
+    List<Question> selectRelated(Question question);
 }

@@ -16,4 +16,6 @@ public interface CommentMapper {
     List<Comment> queryCommentByQuestionId(@Param("questionId") Integer questionId,@Param("type") Integer type);
 
     Integer queryCommentCountByQuestionId(Integer questionId);
+
+    void insCommentCount(Comment comment);
 }

@@ -63,6 +63,8 @@ public class CommentServiceImpl implements CommentService {
                 return CommentEnum.COMMENT_NOT_FOUND.getCode();
             }else {
                 commentMapper.insertComment(comment);
+                comment1.setCommentCount(1);
+                commentMapper.insCommentCount(comment1);
                 return CommentEnum.COMMENT_SUCCESS.getCode();
             }
         }

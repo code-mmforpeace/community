@@ -21,4 +21,11 @@
         FROM zk_comment
         WHERE question_id = #{questionId}
     </select>
+    <update id="insCommentCount" parameterType="com.zhongyuanbbs.demo.domain.Comment">
+        UPDATE zk_comment
+        SET
+        comment_count = comment_count + #{commentCount}
+        WHERE
+        id = #{id}
+    </update>
 </mapper>

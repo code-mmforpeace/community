@@ -11,14 +11,15 @@
     <script src="/common/jquery-1.11.2.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/comment.js" type="application/javascript"></script>
+    <script src="/js/moment.js" type="application/javascript"></script>
 </head>
 
 <body>
 
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main que profile">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+    <div class="row col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h3><span th:text="${question.title}"></span></h3>
                 <span class="text-desc">
@@ -28,6 +29,13 @@
             </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}"></div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <span class="label label-info question-tag" th:each="tag : ${question.tag.split('，')}">
+                        <span class="glyphicon glyphicon-tags"></span>
+                        <span class="label label-info tagtext" th:text="${tag}"></span>
+                    </span>
+                </div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <a th:href="@{'/publish/'+${question.id}}" class="question-menu"
@@ -58,40 +66,43 @@
                             <div><span th:text="${comment.zkComment}"></span></div>
                             <div class="comment-menu">
                                 <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                                <span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}" onclick="openCollapse(this)"></span>
+                                <span th:data-id="${comment.id}" onclick="openCollapse(this)" class="icon">
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                    <span th:text="${comment.commentCount}"></span>
+                                </span>
                                 <span class="pull-right"
                                       th:text="${#dates.format(comment.commentCreateTime,'yyyy-MM-dd')}"></span>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments" th:id="${'comment-'+comment.id}">
                                 <!-- 二级评论区 -->
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="media comment-section" th:each="comment:${commentList}">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object image" th:src="${comment.user.imageUrl}">
-                                                <!-- https://avatars1.githubusercontent.com/u/64819148?v=4 -->
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">
-                                                <span th:text="${comment.user.zkGithubUsername}"></span>
-                                            </h5>
-                                            <div><span th:text="${comment.zkComment}"></span></div>
-                                            <div class="comment-menu">
-                                                <!--<span class="glyphicon glyphicon-thumbs-up icon"></span>-->
-                                                <!--<span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}" onclick="openCollapse(this)"></span>-->
-                                                <span class="pull-right"
-                                                      th:text="${#dates.format(comment.commentCreateTime,'yyyy-MM-dd')}"></span>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse" th:id="${'comment-'+comment.id}">
-                                                二级回复
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="secondComment">-->
+                                    <!--<div class="media comment-section" th:each="comment:${commentList}">-->
+                                    <!--<div class="media-left">-->
+                                        <!--<a href="#">-->
+                                            <!--<img class="media-object image" th:src="${comment.user.imageUrl}">-->
+                                            <!--&lt;!&ndash; https://avatars1.githubusercontent.com/u/64819148?v=4 &ndash;&gt;-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                    <!--<div class="media-body">-->
+                                        <!--<h5 class="media-heading">-->
+                                            <!--<span th:text="${comment.user.zkGithubUsername}"></span>-->
+                                        <!--</h5>-->
+                                        <!--<div><span th:text="${comment.zkComment}"></span></div>-->
+                                        <!--<div class="comment-menu">-->
+                                            <!--&lt;!&ndash;<span class="glyphicon glyphicon-thumbs-up icon"></span>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}" onclick="openCollapse(this)"></span>&ndash;&gt;-->
+                                            <!--<span class="pull-right"-->
+                                                  <!--th:text="${#dates.format(comment.commentCreateTime,'yyyy-MM-dd')}"></span>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse" th:id="${'comment-'+comment.id}">-->
+                                            <!--二级回复-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <input type="text" class="form-control" placeholder="评论一下..." th:id="${'second-'+comment.id}">
                                     <button type="button" class="btn btn-success pull-right" style="margin: 10px 0" onclick="secondCommentCommit(this)" th:data-id="${comment.id}">评论</button>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 media">
                 <div class="media-left">
                     <a href="#">
@@ -120,7 +131,7 @@
             </div>
         </div>
         </div>
-        <div class="col-lg-3 col-md-12 col-md-12 col-xs-12">
+    <div class="col-lg-3 col-md-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-md-12 col-xs-12">
                 <h3>发起人</h3>
                 <div class="media">
@@ -140,6 +151,11 @@
             <hr class="col-lg-12 col-md-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-md-12 col-xs-12">
                 <h3>相关问题</h3>
+                <ul>
+                    <li class="question-related" th:each="related : ${related}">
+                        <a th:href="@{'/question/'+${related.id}}" th:text="${related.title}"></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

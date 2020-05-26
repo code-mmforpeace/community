@@ -15,5 +15,6 @@ public class CommentDto {
     private Date commentCreateTime;
     private Date commentModified;
     private Integer likeCount;
+    private Integer commentCount;
     private GitHubUser user;
 }
