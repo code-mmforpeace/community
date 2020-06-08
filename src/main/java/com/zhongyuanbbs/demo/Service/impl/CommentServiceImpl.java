@@ -2,24 +2,25 @@ package com.zhongyuanbbs.demo.Service.impl;
 
 import com.zhongyuanbbs.demo.Enums.CommentEnum;
 import com.zhongyuanbbs.demo.Enums.CommentTypeEnum;
+import com.zhongyuanbbs.demo.Enums.NotifyStatusEnum;
+import com.zhongyuanbbs.demo.Enums.NotifyTypeEnum;
 import com.zhongyuanbbs.demo.Mapper.CommentMapper;
 import com.zhongyuanbbs.demo.Mapper.GithubUserMapper;
+import com.zhongyuanbbs.demo.Mapper.NotifyMapper;
 import com.zhongyuanbbs.demo.Mapper.QuestionMapper;
 import com.zhongyuanbbs.demo.Service.CommentService;
 import com.zhongyuanbbs.demo.Service.GithubUserService;
 import com.zhongyuanbbs.demo.domain.Comment;
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import com.zhongyuanbbs.demo.domain.Question;
+import com.zhongyuanbbs.demo.domain.ZkNotify;
 import com.zhongyuanbbs.demo.dto.CommentDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +34,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private GithubUserMapper githubUserMapper;
+
+    @Autowired
+    private NotifyMapper notifyMapper;
 
     @Autowired
     private GithubUserService githubUserService;
@@ -52,6 +56,7 @@ public class CommentServiceImpl implements CommentService {
             if(questionById != null) {
                 commentMapper.insertComment(comment);
                 questionMapper.insCommentCount(questionById);
+                createNotify(comment.getCreateor(),questionById.getCreator(),NotifyStatusEnum.NOT_READ.getCode(),NotifyTypeEnum.QUESTION_NOTIFY.getCode());
                 return CommentEnum.COMMENT_SUCCESS.getCode();
             }else {
                 return CommentEnum.TARGET_NOT_FOUND.getCode();
@@ -65,9 +70,20 @@ public class CommentServiceImpl implements CommentService {
                 commentMapper.insertComment(comment);
                 comment1.setCommentCount(1);
                 commentMapper.insCommentCount(comment1);
+                createNotify(comment.getCreateor(),comment1.getCreateor(),NotifyStatusEnum.NOT_READ.getCode(),NotifyTypeEnum.COMMENT_NOTIFY.getCode());
                 return CommentEnum.COMMENT_SUCCESS.getCode();
             }
         }
+    }
+
+    private void createNotify(Integer createor,Integer receiver,Integer status,Integer type) {
+        ZkNotify zkNotify = new ZkNotify();
+        zkNotify.setCreater(createor);
+        zkNotify.setReceiver(receiver);
+        zkNotify.setStatus(status);
+        zkNotify.setType(type);
+        zkNotify.setCreateTime(new Date());
+        notifyMapper.createNotify(zkNotify);
     }
 
     @Override

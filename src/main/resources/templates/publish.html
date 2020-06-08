@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
     <script src="/common/jquery-1.11.2.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/publish.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
 </head>
 
 <body>
@@ -24,15 +27,51 @@
                 <input type="hidden" name="questionId" th:value="${questionId}"/>
                 <div class="form-group">
                     <label for="title">主题名 (简单扼要)：</label>
-                    <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="主题名...">
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="主题名..." autocomplete="off">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="question-editor">
                     <label for="question-desc">简单描述（必填，请参照右侧提示）：</label>
-                    <textarea rows="5" cols="5" class="form-control" th:value="${questionDesc}" id="question-desc" name="question-desc" placeholder="简单描述..."></textarea>
+                    <textarea class="form-control" th:value="${questionDesc}" id="question-desc" name="question-desc" style="display:none;" autocomplete="off"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("question-editor", {
+                            width  : "100%",
+                            height : 350,
+                            path   : "/js/lib/",
+                            delay : 0 ,
+                            watch : false ,
+                            placeholder : "请输入问题描述..." ,
+                            imageUpload    : true ,
+                            imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL : "/file/image",
+                        });
+                    });
+                </script>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
-                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="多标签以，分隔..">
+                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="多标签以，分隔.." autocomplete="off" onclick="openTag()">
+                </div>
+                <div id="select-tags" style="display: none;">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">编程技术</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">校园相关</a></li>
+                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">无聊吹水</a></li>
+                        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle=" tab">发现好玩</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Java')">Java</span></span>
+                            <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Python')">Python</span></span>
+                            <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Python')">C++</span></span>
+                            <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Python')">HTML </span></span>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                        <div role="tabpanel" class="tab-pane" id="settings">...</div>
+                    </div>
                 </div>
                 <div class="container-fluid main que">
                     <div class="row">

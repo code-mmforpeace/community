@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongyuanbbs.demo.Mapper.NotifyMapper">
+    <select id="queryNotifyCountByUserID" parameterType="int" resultType="int">
+        SELECT count(1) FROM zk_notify WHERE receiver = #{userId} LIMIT 1;
+    </select>
+    <select id="queryNotifyByUserID" parameterType="int" resultType="com.zhongyuanbbs.demo.domain.ZkNotify">
+        SELECT * FROM zk_notify WHERE receiver = #{userId}
+        ORDER BY create_time DESC ;
+    </select>
+    <insert id="createNotify" parameterType="com.zhongyuanbbs.demo.domain.ZkNotify">
+        INSERT INTO zk_notify(id,creater,receiver,type,create_time,status)
+        VALUES (#{id},#{creater},#{receiver},#{type},#{create_time},#{status})
+    </insert>
+    <update id="changeStatus" parameterType="com.zhongyuanbbs.demo.domain.ZkNotify">
+        UPDATE zk_notify
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+</mapper>

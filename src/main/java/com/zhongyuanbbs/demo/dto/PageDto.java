@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PageDto {
+public class PageDto<T> {
 
-    private List<Question> questions;
-    private Integer questionCount;
+    private List<T> T;
+    private Integer Count;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;

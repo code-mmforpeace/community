@@ -20,7 +20,8 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span th:text="${sectionName}"></span> </h2>
             <hr>
-            <div class="media" th:each="question:${pageDto.questions}">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'questions'}">
+                <div class="media" th:each="question:${pageDto.T}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object image" th:src="${question.gitHubUser.imageUrl}" >
@@ -28,7 +29,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}">test话题</h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                    </h4>
                     <span th:text="${question.description}">...test</span><br/>
                     <span class="text-desc">
                         •<span th:text="${question.likeCount}">1</span>人关注
@@ -38,41 +41,45 @@
                     </span>
                 </div>
             </div>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li th:if="${pageDto.showFirstPage}">
-                        <a th:href="@{/profile/{section}/(section=${section},pageIndex=1)}">
-                            <span aria-hidden="true">&lt;&lt;</span>
-                        </a>
-                    </li>
-                    <li th:if="${pageDto.showPrevious}">
-                        <a th:href="@{/profile/{section}/(section=${section},pageIndex=${pageDto.currentPage -1})}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-                    <li th:class="${pageDto.currentPage == page}?'active':''" th:each="page : ${pageDto.pageLists}"><a href="/" th:text="${page}" th:href="@{/profile/questions/(pageIndex = ${page})}"></a></li>
-                    <li th:if="${pageDto.showNext}">
-                        <a th:href="@{/profile/{section}/(section=${section},pageIndex=${pageDto.currentPage +1})}" aria-label="Previous">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-                    <li th:if="${pageDto.showEndPage}">
-                        <a th:href="@{/profile/{section}/(section=${section},pageIndex=${pageDto.totalPage})}" aria-label="Next">
-                            <span aria-hidden="true">&gt;&gt;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:if="${pageDto.showFirstPage}">
+                            <a th:href="@{/profile/{section}/(section=${section},pageIndex=1)}">
+                                <span aria-hidden="true">&lt;&lt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pageDto.showPrevious}">
+                            <a th:href="@{/profile/{section}/(section=${section},pageIndex=${pageDto.currentPage -1})}" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+                        <li th:class="${pageDto.currentPage == page}?'active':''" th:each="page : ${pageDto.pageLists}"><a href="/" th:text="${page}" th:href="@{/profile/questions/(pageIndex = ${page})}"></a></li>
+                        <li th:if="${pageDto.showNext}">
+                            <a th:href="@{/profile/{section}/(section=${section},pageIndex=${pageDto.currentPage +1})}" aria-label="Previous">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pageDto.showEndPage}">
+                            <a th:href="@{/profile/{section}/(section=${section},pageIndex=${pageDto.totalPage})}" aria-label="Next">
+                                <span aria-hidden="true">&gt;&gt;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'replies'}">
+                最新回复
+            </div>
         </div>
         <div class="col-lg-3 col-md-12 col-md-12 col-xs-12">
             <div class="list-group section">
                 <a href="/profile/questions"  th:class="${section=='questions'}?'active list-group-item':'list-group-item'">
                     我的帖子
-                    <span class="badge" th:text="${pageDto.questionCount}"></span>
+                    <span class="badge" th:text="${pageDto.count}"></span>
                 </a>
                 <a href="/profile/like"  th:class="${section=='like'}?'list-group-item active':'list-group-item'">我关注的</a>
                 <a href="/profile/replies"  th:class="${section == 'replies'?'list-group-item active':'list-group-item'}">最新回复
-                    <span class="badge">14</span>
+                    <span class="badge" th:text="${unreadCount}">14</span>
                 </a>
                 <a href="#" class="list-group-item">Porta ac consectetur ac</a>
                 <a href="#" class="list-group-item">Vestibulum at eros</a>

@@ -15,9 +15,9 @@ public class QuestionServiceTest extends DemoApplicationTests {
 
     @Test
     public void getQuestionList(){
-        PageDto pageDto = questionService.getQuestionLists(1,5);
-        System.out.println(pageDto.getQuestions().size());
-        for (Question question:pageDto.getQuestions()) {
+        PageDto<Question> pageDto = questionService.getQuestionLists(1,5);
+        System.out.println(pageDto.getT().size());
+        for (Question question:pageDto.getT()) {
             System.out.println(question);
         }
     }

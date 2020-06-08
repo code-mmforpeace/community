@@ -28,8 +28,8 @@ public class QuestionServiceImpl implements QuestionService {
     private GithubUserService githubUserService;
 
     @Override
-    public PageDto getQuestionLists(Integer pageIndex, Integer pageSize) {
-        PageDto pageDto = new PageDto();
+    public PageDto<Question> getQuestionLists(Integer pageIndex, Integer pageSize) {
+        PageDto<Question> pageDto = new PageDto();
         Integer questionCount = questionMapper.queryQuestionCount();
         pageDto.setPageNum(questionCount,pageIndex,pageSize);
         if(pageIndex<1){
@@ -46,14 +46,14 @@ public class QuestionServiceImpl implements QuestionService {
             question1.setGitHubUser(githunUserById);
             questions.add(question1);
         }
-        pageDto.setQuestionCount(questionCount);
-        pageDto.setQuestions(questions);
+        pageDto.setCount(questionCount);
+        pageDto.setT(questions);
         return pageDto;
     }
 
     @Override
-    public PageDto getQuestionListsById(Integer userId, Integer pageIndex, Integer pageSize) {
-        PageDto pageDto = new PageDto();
+    public PageDto<Question> getQuestionListsById(Integer userId, Integer pageIndex, Integer pageSize) {
+        PageDto<Question> pageDto = new PageDto();
         Integer questionCount = questionMapper.queryQuestionCountById(userId);
         pageDto.setPageNum(questionCount,pageIndex,pageSize);
         if(pageIndex<1){
@@ -70,8 +70,8 @@ public class QuestionServiceImpl implements QuestionService {
             question1.setGitHubUser(githunUserById);
             questions.add(question1);
         }
-        pageDto.setQuestionCount(questionCount);
-        pageDto.setQuestions(questions);
+        pageDto.setCount(questionCount);
+        pageDto.setT(questions);
         return pageDto;
     }
 

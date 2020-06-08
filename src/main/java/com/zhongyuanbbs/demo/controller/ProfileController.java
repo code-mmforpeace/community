@@ -1,6 +1,7 @@
 package com.zhongyuanbbs.demo.controller;
 
 import com.zhongyuanbbs.demo.Service.GithubUserService;
+import com.zhongyuanbbs.demo.Service.NotifyService;
 import com.zhongyuanbbs.demo.Service.QuestionService;
 import com.zhongyuanbbs.demo.domain.GitHubUser;
 import com.zhongyuanbbs.demo.dto.PageDto;
@@ -21,6 +22,8 @@ public class ProfileController {
     private GithubUserService githubUserService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NotifyService notifyService;
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action")String action,
@@ -29,9 +32,15 @@ public class ProfileController {
                           @RequestParam(name = "pageSize",defaultValue = "5") int pageSize
     ){
 
+        GitHubUser user = (GitHubUser)request.getSession().getAttribute("user");
+        if(user == null){
+            return "redirect:/";
+        }
         if(action.equals("questions")){
             model.addAttribute("section",action);
             model.addAttribute("sectionName","我的帖子 - 仲园bbs");
+            PageDto pageDto = questionService.getQuestionListsById(user.getId(), pageIndex, pageSize);
+            model.addAttribute("pageDto",pageDto);
         }else if(action.equals("replies")) {
             model.addAttribute("section",action);
             model.addAttribute("sectionName","最新回复 - 仲园bbs");
@@ -39,12 +48,6 @@ public class ProfileController {
             model.addAttribute("section",action);
             model.addAttribute("sectionName","我关注的 - 仲园bbs");
         }
-        GitHubUser user = (GitHubUser)request.getSession().getAttribute("user");
-        if(user == null){
-            return "redirect:/";
-        }
-        PageDto pageDto = questionService.getQuestionListsById(user.getId(), pageIndex, pageSize);
-        model.addAttribute("pageDto",pageDto);
         return "profile";
     }
 
